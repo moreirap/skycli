@@ -2,20 +2,22 @@ import requests
 import click
 import os
 from json import dumps
+from collections import defaultdict
 
 from connection import Connection
 from skyscanner_datetime import SkyScannerDateTime
 
 class RapidApi(object):
-    def __init__(self, country = "UK", currency = "GBP", locale = "en-GB"):
+    def __init__(self, key, country , currency, locale):
         self.country = country
         self.currency = currency
         self.locale = locale
+        self.key = key
 
-    def con(self, key = None):
-        if key is None:
+    def con(self):
+        if self.key is None:
             raise ConnectionError("API key not provided")
-        return Connection(key = key, country = self.country, currency = self.currency, locale=self.locale) 
+        return Connection(key = self.key, country = self.country, currency = self.currency, locale=self.locale) 
 
     def log_json_response(self,response):
         click.secho(dumps(response.to_dict()), fg="cyan")
@@ -30,8 +32,15 @@ class RapidApi(object):
 @click.option("--currency", help="The currency you want the prices in", show_default="GBP", default="GBP")
 @click.option("--locale", help="The locale you want the results in (ISO locale)", show_default="en-GBP", default="en-GB")
 def skycli(ctx, key, country, currency, locale):
-    ctx.ensure_object(dict)
+    ctx.ensure_object(defaultdict)
     ctx.obj['KEY'] = key
+    ctx.obj['country'] = country
+    ctx.obj['currency'] = currency
+    ctx.obj['locale'] = locale
+    if key == "":
+        print("Rapid Key not set and not available from environment. Set SKYSCANNER_API_KEY environment variable\n")
+        print(ctx.get_usage())
+        exit(1)
 
 @click.command(name="places")
 @click.argument("query")
@@ -39,9 +48,8 @@ def skycli(ctx, key, country, currency, locale):
 def get_places(ctx, query = None):
     """Get a list of places that match a query string."""
     
-    key = ctx.obj['KEY']
-    api = RapidApi()
-    response = api.con(key).list_places(query)
+    api = RapidApi(ctx.obj['KEY'], ctx.obj['country'], ctx.obj['currency'], ctx.obj['locale'])
+    response = api.con().list_places(query)
     api.log_json_response(response)
 
 @click.command(name="markets")
@@ -49,9 +57,8 @@ def get_places(ctx, query = None):
 def get_markets(ctx):
     """Retrieve the market countries that we support."""
 
-    key = ctx.obj['KEY']
-    api = RapidApi()
-    response = api.con(key).list_markets()
+    api = RapidApi(ctx.obj['KEY'], ctx.obj['country'], ctx.obj['currency'], ctx.obj['locale'])
+    response = api.con().list_markets()
     api.log_json_response(response)
 
 @click.command(name="currencies")
@@ -59,9 +66,8 @@ def get_markets(ctx):
 def get_currencies(ctx):
     """Retrieve the currencies that we support."""
     
-    key = ctx.obj['KEY']
-    api = RapidApi()
-    response = api.con(key).get_currencies()
+    api = RapidApi(ctx.obj['KEY'], ctx.obj['country'], ctx.obj['currency'], ctx.obj['locale'])
+    response = api.con().get_currencies()
     api.log_json_response(response)
 
 @click.command(name="quotes")
@@ -73,19 +79,37 @@ def get_currencies(ctx):
 def get_quotes(ctx, origin, destination, outbounddate, inbounddate):
     """Retrieve the cheapest quotes from our cache prices."""
 
-    key = ctx.obj['KEY']
-    api = RapidApi()
-    response = api.con(key).browse_quotes(originplace=origin, \
+    api = RapidApi(ctx.obj['KEY'], ctx.obj['country'], ctx.obj['currency'], ctx.obj['locale'])
+    response = api.con().browse_quotes(originplace=origin, \
         destinationplace=destination, \
         outboundpartialdate=outbounddate, \
         inboundpartialdate = inbounddate)
     api.log_json_response(response)
+
+@click.command(name="routes")
+@click.pass_context
+@click.argument('origin')
+@click.argument('destination')
+@click.argument('outbounddate', type=SkyScannerDateTime())
+@click.argument('inbounddate', type=SkyScannerDateTime(), required=False)
+def get_routes(ctx, origin, destination, outbounddate, inbounddate):
+    """ Retrieve the cheapest routes from our cache prices. 
+        Similar to the Browse Quotes API but with the routes built for you from the individual quotes."""
+
+    api = RapidApi(ctx.obj['KEY'], ctx.obj['country'], ctx.obj['currency'], ctx.obj['locale'])
+    response = api.con().browse_routes(originplace=origin, \
+        destinationplace=destination, \
+        outboundpartialdate=outbounddate, \
+        inboundpartialdate = inbounddate)
+    api.log_json_response(response)
+
 
 # Add all commands to group
 skycli.add_command(get_places)
 skycli.add_command(get_markets)
 skycli.add_command(get_currencies)
 skycli.add_command(get_quotes)
+skycli.add_command(get_routes)
 
 if __name__ == "__main__":
     skycli()
