@@ -1,0 +1,88 @@
+{
+  "Quotes": [
+    {
+      "QuoteId": 1,
+      "MinPrice": 92,
+      "Direct": false,
+      "OutboundLeg": {
+        "CarrierIds": [
+          881
+        ],
+        "OriginId": 65698,
+        "DestinationId": 65747,
+        "DepartureDate": "2019-09-01T00:00:00"
+      },
+      "QuoteDateTime": "2019-08-26T13:35:00"
+    },
+    {
+      "QuoteId": 2,
+      "MinPrice": 109,
+      "Direct": true,
+      "OutboundLeg": {
+        "CarrierIds": [
+          1760
+        ],
+        "OriginId": 65698,
+        "DestinationId": 65747,
+        "DepartureDate": "2019-09-01T00:00:00"
+      },
+      "QuoteDateTime": "2019-08-26T13:35:00"
+    }
+  ],
+  "Places": [
+    {
+      "PlaceId": 65698,
+      "IataCode": "LHR",
+      "Name": "London Heathrow",
+      "Type": "Station",
+      "SkyscannerCode": "LHR",
+      "CityName": "London",
+      "CityId": "LOND",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": 65747,
+      "IataCode": "LIS",
+      "Name": "Lisbon",
+      "Type": "Station",
+      "SkyscannerCode": "LIS",
+      "CityName": "Lisbon",
+      "CityId": "LISB",
+      "CountryName": "Portugal"
+    }
+  ],
+  "Carriers": [
+    {
+      "CarrierId": 881,
+      "Name": "British Airways"
+    },
+    {
+      "CarrierId": 885,
+      "Name": "Flybe"
+    },
+    {
+      "CarrierId": 1047,
+      "Name": "eurowings"
+    },
+    {
+      "CarrierId": 1710,
+      "Name": "Brussels Airlines"
+    },
+    {
+      "CarrierId": 1760,
+      "Name": "TAP"
+    }
+  ],
+  "Currencies": [
+    {
+      "Code": "GBP",
+      "Symbol": "Â£",
+      "ThousandsSeparator": ",",
+      "DecimalSeparator": ".",
+      "SymbolOnLeft": true,
+      "SpaceBetweenAmountAndSymbol": false,
+      "RoundingCoefficient": 0,
+      "DecimalDigits": 2
+    }
+  ]
+}

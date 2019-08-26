@@ -103,6 +103,31 @@ def get_routes(ctx, origin, destination, outbounddate, inbounddate):
         inboundpartialdate = inbounddate)
     api.log_json_response(response)
 
+@click.command(name="live")
+@click.pass_context
+@click.argument('origin')
+@click.argument('destination')
+@click.argument('outbounddate', type=SkyScannerDateTime())
+@click.argument('adults', type=click.INT, default = 1)
+def get_live_prices(ctx, origin, destination, outbounddate, adults):
+    """ Retrieve iterneraries from our LIVE prices. \n
+        It first invokes CreateSession to obtain a session with the Live API.\n
+        
+        Arguments:\n
+        origin\t\tPlace of origin (see skycli places command)\n
+        destination\tPlace of destination (see skycli places command)\n
+        outbounddate\tDate of departure in yyy-mm-dd or yyyy-mm format or anytime\n
+        adults\t\tTotal number of adults in trip\n"""
+
+    api = RapidApi(ctx.obj['KEY'], ctx.obj['country'], ctx.obj['currency'], ctx.obj['locale'])
+    response = api.con().live_search(originplace=origin,
+        destinationplace=destination,
+        outbounddate=outbounddate,
+        adults = adults)
+    # api.log_json_response(response)
+    click.secho(str(response), fg="cyan")
+
+
 
 # Add all commands to group
 skycli.add_command(get_places)
@@ -110,6 +135,8 @@ skycli.add_command(get_markets)
 skycli.add_command(get_currencies)
 skycli.add_command(get_quotes)
 skycli.add_command(get_routes)
+skycli.add_command(get_live_prices)
 
 if __name__ == "__main__":
     skycli()
+    

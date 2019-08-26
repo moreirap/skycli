@@ -1,0 +1,84 @@
+{
+  "Places": [
+    {
+      "PlaceId": "LOND-sky",
+      "PlaceName": "London",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "LHR-sky",
+      "PlaceName": "London Heathrow",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "LGW-sky",
+      "PlaceName": "London Gatwick",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "STN-sky",
+      "PlaceName": "London Stansted",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "LTN-sky",
+      "PlaceName": "London Luton",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "LCY-sky",
+      "PlaceName": "London City",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "SEN-sky",
+      "PlaceName": "London Southend",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "LOND-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "LDY-sky",
+      "PlaceName": "Derry",
+      "CountryId": "UK-sky",
+      "RegionId": "",
+      "CityId": "DERR-sky",
+      "CountryName": "United Kingdom"
+    },
+    {
+      "PlaceId": "YXU-sky",
+      "PlaceName": "London",
+      "CountryId": "CA-sky",
+      "RegionId": "",
+      "CityId": "YXUS-sky",
+      "CountryName": "Canada"
+    },
+    {
+      "PlaceId": "ELS-sky",
+      "PlaceName": "East London",
+      "CountryId": "ZA-sky",
+      "RegionId": "",
+      "CityId": "ELSA-sky",
+      "CountryName": "South Africa"
+    }
+  ]
+}
